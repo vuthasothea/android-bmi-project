@@ -46,7 +46,7 @@ public class CalculateFragment extends Fragment {
             }
         });
 
-        textResultNumber.setText("23.00kg/m\u00B2");
+        //textResultNumber.setText("23.00kg/m\u00B2");
 
         return view;
     }
@@ -63,7 +63,7 @@ public class CalculateFragment extends Fragment {
     }
 
     public void displayBmi(float bmi) {
-        textResultNumber.setText(String.format("%.1f kg/m²", bmi));
+        textResultNumber.setText(String.format("%.1f kg/m\u00B2", bmi));
         if(bmi < 18.5) {
             textResultText.setText("Underweight");
         } else if(bmi < 25) {

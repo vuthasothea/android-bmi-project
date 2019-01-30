@@ -25,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="27.00 kg/m²"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />
@@ -34,9 +33,8 @@
             android:id="@+id/text_result_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Overweight"
-            android:textAlignment="center"
             android:layout_marginTop="10dp"
+            android:textAlignment="center"
             android:textColor="@color/colorAccent" />
 
         <EditText
