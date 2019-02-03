@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    private static int LOADING_TIMEOUT = 4000;
+    private static int LOADING_TIMEOUT = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

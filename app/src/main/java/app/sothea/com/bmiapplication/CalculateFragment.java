@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 /**
@@ -24,6 +27,7 @@ public class CalculateFragment extends Fragment {
     private EditText edtHeight;
     private EditText edtWeight;
     private Button btnCalculate;
+    private ImageView imageBmi;
 
     public CalculateFragment() {
         // Required empty public constructor
@@ -38,6 +42,7 @@ public class CalculateFragment extends Fragment {
         textResultText = view.findViewById(R.id.text_result_text);
         edtHeight = view.findViewById(R.id.edt_height);
         edtWeight = view.findViewById(R.id.edt_weight);
+        imageBmi = view.findViewById(R.id.image_bmi);
         btnCalculate = view.findViewById(R.id.btnCalculate);
         btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,8 +50,6 @@ public class CalculateFragment extends Fragment {
                 calculateBmi();
             }
         });
-
-        //textResultNumber.setText("23.00kg/m\u00B2");
 
         return view;
     }
@@ -58,20 +61,34 @@ public class CalculateFragment extends Fragment {
             float height = Float.parseFloat(strHeight);
             float weight = Float.parseFloat(strWeight);
             float bmi = round((weight / (height * height)) * 10000, 1);
-            displayBmi(bmi);
-        }
-    }
 
-    public void displayBmi(float bmi) {
-        textResultNumber.setText(String.format("%.1f kg/m\u00B2", bmi));
-        if(bmi < 18.5) {
-            textResultText.setText("Underweight");
-        } else if(bmi < 25) {
-            textResultText.setText("Normal weight");
-        } else if(bmi < 30) {
-            textResultText.setText("Overweight");
-        } else {
-            textResultText.setText("Obesity");
+            textResultNumber.setText(String.format("%.1f kg/m\u00B2", bmi));
+            String resultText = "";
+            if(bmi < 18.5) {
+                resultText = "Underweight";
+                imageBmi.setImageResource(R.mipmap.underweight);
+            } else if(bmi < 25) {
+                resultText = "Normal weight";
+                imageBmi.setImageResource(R.mipmap.healthy);
+            } else if(bmi < 30) {
+                resultText = "Overweight";
+                imageBmi.setImageResource(R.mipmap.overweight);
+            } else {
+                resultText = "Obesity";
+                imageBmi.setImageResource(R.mipmap.obese);
+            }
+            textResultText.setText(resultText);
+
+            BmiEntiry bmiEntiry = new BmiEntiry();
+            bmiEntiry.setWeight(weight);
+            bmiEntiry.setHeight(height);
+            bmiEntiry.setDate("11/11/1995");
+            bmiEntiry.setResultNumber(bmi);
+            bmiEntiry.setResultText(resultText);
+
+            AppDatabase.getAppDatatbase(getContext()).bmiDao().insert(bmiEntiry);
+            Toast.makeText(getContext(), "Insert success", Toast.LENGTH_LONG).show();
+
         }
     }
 
